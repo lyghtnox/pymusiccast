@@ -51,6 +51,13 @@ class Zone(object):
         """Sets source_list."""
         self._yamaha.source_list = source_list
 
+    @property
+    def program_list(self):
+        """Return program_list."""
+        req_url = ENDPOINTS["getProgramList"].format(self.ip_address,
+                                                        self.zone_id)
+        return request(req_url)
+
     def handle_message(self, message):
         """Process UDP messages"""
         if self._yamaha:
@@ -76,6 +83,9 @@ class Zone(object):
             if 'mute' in message:
                 _LOGGER.debug("Mute: %s", message.get('mute'))
                 self._yamaha.mute = message.get('mute', False)
+            if 'sound_program' in message:
+                _LOGGER.debug("Program: %s", message.get('sound_program'))
+                self._yamaha._sound_program = message.get('sound_program')
         else:
             _LOGGER.debug("No yamaha-obj found")
 
@@ -152,4 +162,10 @@ class Zone(object):
         """Send Input command."""
         req_url = ENDPOINTS["setInput"].format(self.ip_address, self.zone_id)
         params = {"input": input_id}
+        return request(req_url, params=params)
+
+    def set_sound_program(self, program_id):
+        """Send Sound Program command."""
+        req_url = ENDPOINTS["setProgram"].format(self.ip_address, self.zone_id)
+        params = {"program": program_id}
         return request(req_url, params=params)

@@ -15,6 +15,9 @@ ENDPOINTS = {
     "setMute": "http://{}/YamahaExtendedControl/v1/{}/setMute",
     "setPower": "http://{}/YamahaExtendedControl/v1/{}/setPower",
     "setVolume": "http://{}/YamahaExtendedControl/v1/{}/setVolume",
+    "setProgram": "http://{}/YamahaExtendedControl/v1/{}/setSoundProgram",
+    "getProgramList": ("http://{}/YamahaExtendedControl"
+                       "/v1/{}/getSoundProgramList"),
 }
 
 STATE_UNKNOWN = "unknown"
